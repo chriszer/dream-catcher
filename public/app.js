@@ -7,12 +7,12 @@ const btnLoading = submitBtn.querySelector('.btn-loading');
 const dreamsContainer = document.getElementById('dreamsContainer');
 
 // Load dreams on page load
-document.addEventListener('DOMContentLoaded', loadDreams); 
+document.addEventListener('DOMContentLoaded', loadDreams);
 
 // Form submission
 dreamForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const dream = dreamText.value.trim();
     if (!dream) return;
 
@@ -38,10 +38,10 @@ dreamForm.addEventListener('submit', async (e) => {
             showErrorMessage(data.error || 'Failed to process your dream. Please try again.');
             return;
         }
-        
+
         // Clear form
         dreamText.value = '';
-        
+
         // Reload dreams
         await loadDreams();
 
@@ -53,7 +53,7 @@ dreamForm.addEventListener('submit', async (e) => {
         submitBtn.disabled = false;
         btnText.style.display = 'inline';
         btnLoading.style.display = 'none';
-       
+
     }
 });
 
@@ -67,7 +67,7 @@ async function loadDreams() {
 
         const dreams = await response.json();
         displayDreams(dreams);
-    
+
     } catch (error) {
         console.error('Error:', error);
         dreamsContainer.innerHTML = '<p class="error">Failed to load dreams. Please refresh the page.</p>';
@@ -131,14 +131,14 @@ async function deleteDream(id) {
         if (!response.ok) {
             throw new Error('Failed to delete dream');
         }
-        
+
         await loadDreams();
-        
+
     } catch (error) {
         console.error('Error:', error);
     }
 }
- 
+
 // Format date
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -164,7 +164,7 @@ function toggleInterpretation(event) {
     const btn = event.target;
     const interpretationDiv = btn.previousElementSibling;
     const isExpanded = interpretationDiv.dataset.expanded === 'true';
-    
+
     if (isExpanded) {
         interpretationDiv.textContent = interpretationDiv.dataset.truncated;
         interpretationDiv.dataset.expanded = 'false';
